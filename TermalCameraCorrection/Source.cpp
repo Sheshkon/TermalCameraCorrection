@@ -71,7 +71,7 @@ void convert16to8(const vector<uint16_t>& src, vector<uint8_t>& dst)
 
 
 // Convert 1-channel image to 3-channel image
-void cvtGrayToRGB(const vector<uint8_t>& gray_image, Mat& rgb_image)
+void gray2rgb(const vector<uint8_t>& gray_image, Mat& rgb_image)
 {
 	rgb_image.create(IMAGE_HEIGHT, IMAGE_WIDTH, CV_8UC3);
 
@@ -89,7 +89,7 @@ void cvtGrayToRGB(const vector<uint8_t>& gray_image, Mat& rgb_image)
 
 
 // Function for gamma correction
-void gammaCorrection(vector<uint16_t>& image) {
+void gamma_correction(vector<uint16_t>& image) {
 
 	double gamma_value = find_gamma(image);
 
@@ -133,9 +133,9 @@ int main()
 
 	Mat rgb_image;
 	for (int i = 0; i < FRAMES_COUNT; i++) {
-		gammaCorrection(images_16bit[i]);
+		gamma_correction(images_16bit[i]);
 		convert16to8(images_16bit[i], images_8bit[i]);
-		cvtGrayToRGB(images_8bit[i], rgb_image);
+		gray2rgb(images_8bit[i], rgb_image);
 
 		// Write the frame to the video file
 		video.write(rgb_image);
